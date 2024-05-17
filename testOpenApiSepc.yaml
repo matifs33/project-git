@@ -1,0 +1,114 @@
+openapi: 3.0.0
+info:
+  description: HRworks API v2
+  version: "1.30"
+  title: HRworks API v2
+  termsOfService: 'https://www.hrworks.de/unternehmen/agb/'
+tags:
+  - name: testTag
+    description: Authentication and health check.
+ 
+paths:
+  /authentication:
+    post:
+      tags:
+        - utility
+      summary: Receive Authentication Token
+      security: []
+      description: A endpoint description.
+      operationId: TokenOperation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credentials'
+        description: 'The credentials consisting of accessKey and secretAccessKey.'
+        required: true
+      responses:
+        '200':
+          description: Success response. A new access token was created and is returned to the caller.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+        '403':
+          description: The credentials provided with the request were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      parameters: []
+
+ 
+externalDocs:
+  description: No external docs
+  url: 'abc'
+servers:
+  - url: 'abc'
+    description: description
+components:
+  responses:
+
+    InvalidEndpointError:
+      description: The requested API endpoint does not exists or is unable to process requests with the provided HTTP verb.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+
+
+    InvalidCredentialsError:
+      description: The credentials provided with the request were invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+
+  schemas:
+
+    ApiError:
+      type: object
+      description: The representation of an error returned by the API.
+      properties:
+        errorCode:
+          type: number
+          description: 'The HTTP error code, e.g. 403.'
+        type:
+          type: string
+          description: 'A string identifier for the error, e.g. InvalidCredentialsError'
+        errorMessage:
+          type: string
+          description: A text description of the error. Refer to this description in order to identify a solution for the problem.
+        additionalErrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiError'
+          description: Sub-errors that might be attached to the main error object.
+
+    Credentials:
+      type: object
+      properties:
+        accessKey:
+          type: string
+          description: The public access key of the credentials.
+        secretAccessKey:
+          type: string
+          description: The secret access key of the credentials.
+
+    Token:
+      type: object
+      description: 'A JSON web token.'
+      properties:
+        token:
+          type: string
+          description: The JWT in encoded format.
+  
+  links: {}
+  callbacks: {}
+  securitySchemes:
+    BearerJWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - BearerJWT: []
