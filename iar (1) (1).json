@@ -1,0 +1,385 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "v1",
+    "title": "Real Time CAD Update API",
+    "description": "### Endpoints\r\n[HTTPS POST - Send incident information as JSON or XML](iar.json/paths/~1api~1v1~1incidents/post)\r\n\r\n[HTTPS POST - Send incident information as JSON, XML, or TXT file](iar.json/paths/~1api~1v1~1incidents~1file/post)\r\n\r\n### Preferred JSON Data Schema\r\n\r\n[IaR CAD Incident JSON schema](iar.json/components/schemas/Incident)\r\n\r\n### Additional Documentation\r\n[Developer Guide](docs/B%20-%20Developer%20Guide.md)",
+    "license": {
+      "name": ""
+    }
+  },
+  "servers": [
+    {
+      "url": "https://incidents-us.iamresponding.com",
+      "description": "USA Production"
+    },
+    {
+      "url": "https://incidents-ca.iamresponding.com",
+      "description": "Canada Production"
+    },
+    {
+      "url": "https://incidents-au.iamresponding.com",
+      "description": "Australia Production"
+    },
+    {
+      "url": "https://incidents.iartest.com",
+      "description": "Test"
+    }
+  ],
+  "paths": {
+    "/api/v1/incidents": {
+      "post": {
+        "tags": [
+          "Incidents"
+        ],
+        "summary": "Send incident information as JSON or XML data",
+        "description": "Send real-time incident information as data in the POST request.",
+        "parameters": [
+          {
+            "name": "X-Recipient-Id",
+            "in": "header",
+            "description": "This optional header field allows the data to be directed to specific IaR users by populating the field with the IaR notification identifier.  Multiple instances of this header are allowed.  See the Developer Guide for more information.",
+            "schema": {
+              "type": "string",
+              "example": "815c"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The body of the request may contain JSON or XML data (to match the `Content-Type` header).  Use the dropdown above to switch the example the right between JSON and XML.  The preferred data format is JSON using the [IaR CAD Incident schema](iar.json/components/schemas/Incident).  Seee the Developer Guide for more information.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              },
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "id": "123456",
+                    "latitude": "40.123456",
+                    "longitude": "-80.123456"
+                  }
+                }
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "type": "string"
+              },
+              "examples": {
+                "Example 1": {
+                  "value": "<?xml version \"1.0\" encoding=\"UTF-16\"?>\n      <CAD_EVENT>\n          <ID>123456</ID>\n          <LATITUDE>40.123456</LATITUDE>\n          <LONGITUDE>-80.123456</LONGITUDE>\n          ...\n  </CAD_EVENT>"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "The request was accepted"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Unable to process incident."
+          }
+        },
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "servers": [
+          {
+            "url": "https://incidents-us.iamresponding.com",
+            "description": "USA Production"
+          },
+          {
+            "url": "https://incidents-ca.iamresponding.com",
+            "description": "Canada Production"
+          },
+          {
+            "url": "https://incidents-au.iamresponding.com",
+            "description": "Australia Production"
+          },
+          {
+            "url": "https://incidents.iartest.com",
+            "description": "Test"
+          }
+        ]
+      }
+    },
+    "/api/v1/incidents/file": {
+      "post": {
+        "tags": [
+          "Incidents"
+        ],
+        "summary": "Send incident information as a file",
+        "description": "Send real-time incident information as a file in the POST request.  XML, JSON, and TXT files are supported.",
+        "parameters": [
+          {
+            "name": "X-Recipient-Id",
+            "in": "header",
+            "description": "This optional header field allows the data to be directed to specific IaR users by populating the field with the IaR notification identifier.  Multiple instances of this header are allowed.  See the Developer Guide for more information.",
+            "schema": {
+              "type": "string",
+              "example": "815c"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "string"
+              },
+              "examples": {
+                "Example 1": {
+                  "value": "string"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "The request was accepted"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Unable to process incident."
+          }
+        },
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/v1/regions": {
+      "get": {
+        "tags": [
+          "Regions"
+        ],
+        "summary": "Get a list of regions.",
+        "parameters": [
+          {
+            "name": "Filters",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Sorts",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 1,
+              "maximum": 2147483647
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 1,
+              "maximum": 2147483647
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of regions.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/regionResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Unable to obtain a list of regions."
+          }
+        },
+        "security": [
+          {}
+        ],
+        "servers": [
+          {
+            "url": "https://incidents-us.iamresponding.com",
+            "description": "USA Production"
+          },
+          {
+            "url": "https://incidents-ca.iamresponding.com",
+            "description": "Canada Production"
+          },
+          {
+            "url": "https://incidents-au.iamresponding.com",
+            "description": "Australia Production"
+          },
+          {
+            "url": "https://incidents.iartest.com",
+            "description": "Test"
+          }
+        ],
+        "x-internal": true
+      }
+    },
+    "/api/v1/regions/{id}": {
+      "get": {
+        "tags": [
+          "Regions"
+        ],
+        "summary": "Get a specific region.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A specific region.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/regionResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Unable to obtain a specific region."
+          }
+        },
+        "security": [
+          {}
+        ],
+        "servers": [
+          {
+            "url": "https://incidents-us.iamresponding.com",
+            "description": "USA Production"
+          },
+          {
+            "url": "https://incidents-ca.iamresponding.com",
+            "description": "Canada Production"
+          },
+          {
+            "url": "https://incidents-au.iamresponding.com",
+            "description": "Australia Production"
+          },
+          {
+            "url": "https://incidents.iartest.com",
+            "description": "Test"
+          }
+        ],
+        "x-internal": true
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "apiKey": {
+        "type": "apiKey",
+        "name": "X-Api-Key",
+        "in": "header"
+      }
+    },
+    "schemas": {
+      "regionResponse": {
+        "type": "object",
+        "description": "Region Response DTO.",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "nullable": true,
+            "description": "The country's code in ISO 3166-1 alpha-2."
+          },
+          "id": {
+            "$ref": "#/components/schemas/objectId"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "The country's name."
+          },
+          "uri": {
+            "type": "string",
+            "nullable": true,
+            "description": "The region uri."
+          }
+        },
+        "x-internal": true
+      },
+      "objectId": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "creationTime": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "timestamp": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "creationTime",
+          "timestamp"
+        ],
+        "x-internal": true
+      }
+    }
+  }
+}

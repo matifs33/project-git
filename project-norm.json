@@ -1,8 +1,5 @@
 {
   "openapi": "3.1.0",
-  "x-stoplight": {
-    "id": "n52suo9v4smj4"
-  },
   "info": {
     "version": "1.0",
     "title": "project-norm"
@@ -61,10 +58,7 @@
           {
             "url": "http://localhost:3000"
           }
-        ],
-        "x-stoplight": {
-          "id": "dtbgdcrm1cud8"
-        }
+        ]
       },
       "patch": {
         "summary": "Update User Information",
@@ -159,10 +153,7 @@
           {
             "url": "http://localhost:3000"
           }
-        ],
-        "x-stoplight": {
-          "id": "o3pnctcsoldwn"
-        }
+        ]
       }
     },
     "/user": {
@@ -246,10 +237,7 @@
           {
             "url": "http://localhost:3000"
           }
-        ],
-        "x-stoplight": {
-          "id": "xj0ngwln2v0q2"
-        }
+        ]
       }
     }
   },
@@ -307,10 +295,7 @@
             "emailVerified": true,
             "signUpDate": "2019-08-24"
           }
-        ],
-        "x-stoplight": {
-          "id": "go03aztqiu9p1"
-        }
+        ]
       }
     }
   }
