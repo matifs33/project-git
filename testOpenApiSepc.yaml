@@ -1,13 +1,12 @@
 openapi: 3.0.0
 info:
   description: HRworks API v2
-  version: "1.30"
+  version: '1.30'
   title: HRworks API v2
   termsOfService: 'https://www.hrworks.de/unternehmen/agb/'
 tags:
   - name: testTag
     description: Authentication and health check.
- 
 paths:
   /authentication:
     post:
@@ -22,7 +21,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Credentials'
-        description: 'The credentials consisting of accessKey and secretAccessKey.'
+        description: The credentials consisting of accessKey and secretAccessKey.
         required: true
       responses:
         '200':
@@ -31,6 +30,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Token'
+              examples:
+                Example 1:
+                  value:
+                    token: string
+                    ejemplazo: unejemploexpectacular
+          headers:
+            header-0:
+              schema:
+                type: string
         '403':
           description: The credentials provided with the request were invalid.
           content:
@@ -38,34 +46,27 @@ paths:
               schema:
                 $ref: '#/components/schemas/ApiError'
       parameters: []
-
- 
 externalDocs:
   description: No external docs
-  url: 'abc'
+  url: abc
 servers:
-  - url: 'abc'
+  - url: abc
     description: description
 components:
   responses:
-
     InvalidEndpointError:
       description: The requested API endpoint does not exists or is unable to process requests with the provided HTTP verb.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-
-
     InvalidCredentialsError:
       description: The credentials provided with the request were invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-
   schemas:
-
     ApiError:
       type: object
       description: The representation of an error returned by the API.
@@ -84,7 +85,6 @@ components:
           items:
             $ref: '#/components/schemas/ApiError'
           description: Sub-errors that might be attached to the main error object.
-
     Credentials:
       type: object
       properties:
@@ -94,15 +94,13 @@ components:
         secretAccessKey:
           type: string
           description: The secret access key of the credentials.
-
     Token:
       type: object
-      description: 'A JSON web token.'
+      description: A JSON web token.
       properties:
         token:
           type: string
           description: The JWT in encoded format.
-  
   links: {}
   callbacks: {}
   securitySchemes:
