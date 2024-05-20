@@ -45,6 +45,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiError'
+              examples:
+                Example 1:
+                  value:
+                    errorCode: 0
+                    type: string
+                    errorMessage: string
+                    additionalErrors:
+                      - {}
       parameters: []
 externalDocs:
   description: No external docs
