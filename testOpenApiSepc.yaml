@@ -35,6 +35,10 @@ paths:
                   value:
                     token: string
                     ejemplazo: unejemploexpectacular
+                Example 2:
+                  value:
+                    token: string
+                    ejemplazo2: ejemplazo2
           headers:
             header-0:
               schema:
@@ -51,6 +55,15 @@ paths:
                     errorCode: 0
                     type: string
                     errorMessage: string
+                    additionalErrors:
+                      - {}
+                Example 2:
+                  value:
+                    '22222': null
+                    errorCode: 0
+                    type: string
+                    errorMessage: string
+                    eeee: null
                     additionalErrors:
                       - {}
       parameters: []
